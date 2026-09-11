@@ -1,0 +1,73 @@
+import type { Product } from "./types";
+import { isoDateOffset } from "./expiration";
+
+export const SAMPLE_PRODUCTS: Product[] = [
+  {
+    id: "p1",
+    barcode: "8410076472412",
+    name: "Yogur natural pack 4",
+    category: "Lácteos",
+    brand: "Danone",
+    expirationDate: isoDateOffset(1),
+    discounted: false,
+  },
+  {
+    id: "p2",
+    barcode: "8410188012092",
+    name: "Leche entera 1L",
+    category: "Lácteos",
+    brand: "Pascual",
+    expirationDate: isoDateOffset(5),
+    discounted: false,
+  },
+  {
+    id: "p3",
+    barcode: "8412600012013",
+    name: "Pan de molde integral",
+    category: "Panadería",
+    brand: "Bimbo",
+    expirationDate: isoDateOffset(2),
+    discounted: false,
+  },
+  {
+    id: "p4",
+    barcode: "0000000004011",
+    name: "Manzanas Golden 1kg",
+    category: "Frutas",
+    expirationDate: isoDateOffset(12),
+    discounted: false,
+  },
+  {
+    id: "p5",
+    barcode: "8434165467890",
+    name: "Pechuga de pollo fileteada",
+    category: "Carnes",
+    expirationDate: isoDateOffset(0),
+    discounted: false,
+  },
+  {
+    id: "p6",
+    barcode: "8410076478888",
+    name: "Ensalada mix lista",
+    category: "Verduras",
+    expirationDate: isoDateOffset(3),
+    discounted: true,
+  },
+  {
+    id: "p7",
+    barcode: "8410320030012",
+    name: "Queso fresco 250g",
+    category: "Lácteos",
+    brand: "García Baquero",
+    expirationDate: isoDateOffset(8),
+    discounted: false,
+  },
+  {
+    id: "p8",
+    barcode: "8410320123456",
+    name: "Jamón york lonchas",
+    category: "Charcutería",
+    expirationDate: isoDateOffset(4),
+    discounted: false,
+  },
+];
