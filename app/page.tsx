@@ -1,5 +1,5 @@
-import { FreshMindApp } from "@/components/FreshMindApp";
+import { CaducaScanApp } from "@/components/CaducaScanApp";
 
 export default function Home() {
-  return <FreshMindApp />;
+  return <CaducaScanApp />;
 }

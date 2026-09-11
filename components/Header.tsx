@@ -7,7 +7,7 @@ export function Header() {
         </div>
         <div>
           <h1 className="text-lg font-semibold tracking-tight text-fresh-800">
-            FreshMind
+            CaducaScan
           </h1>
           <p className="text-xs text-slate-500">Control de caducidades</p>
         </div>

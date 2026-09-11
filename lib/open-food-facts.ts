@@ -50,7 +50,7 @@ export async function fetchOpenFoodFacts(barcode: string): Promise<OffProduct> {
     `https://world.openfoodfacts.org/api/v0/product/${encodeURIComponent(barcode)}.json`,
     {
       headers: {
-        "User-Agent": "FreshMind/0.1 (supermarket expiration tracker)",
+        "User-Agent": "CaducaScan/0.1 (supermarket expiration tracker)",
       },
     }
   );

@@ -12,7 +12,7 @@ const ScannerModal = dynamic(
   { ssr: false }
 );
 
-export function FreshMindApp() {
+export function CaducaScanApp() {
   return (
     <ProductsProvider>
       <HomeScreen />

@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FreshMind",
+  title: "CaducaScan",
   description: "Control de caducidades para empleados de supermercado",
 };
 
