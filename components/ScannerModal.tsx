@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@zxing/library";
 import { fetchOpenFoodFacts } from "@/lib/open-food-facts";
-import { isoDateOffset } from "@/lib/expiration";
+import { isoDateOffset, estimateExpiryDays } from "@/lib/expiration";
 import type { ProductDraft } from "@/lib/types";
 import { ProductForm } from "./ProductForm";
 
@@ -52,10 +52,10 @@ export function ScannerModal({
           category: off.category,
           brand: off.brand,
           imageUrl: off.imageUrl,
-          expirationDate: isoDateOffset(7),
-        });
-        setStep("form");
-      } catch {
+          expirationDate: isoDateOffset(estimateExpiryDays(off.category)),
+        });  
+          setStep("form");
+      }  catch {
         setMessage("No se pudo obtener el producto. Inténtalo de nuevo.");
         setStep("error");
       }

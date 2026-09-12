@@ -16,11 +16,11 @@ export function statusFromDays(days: number): ExpirationStatus {
 export function formatDaysLabel(days: number): string {
   if (days < 0) {
     const n = Math.abs(days);
-    return n === 1 ? "Caducó hace 1 día" : `Caducó hace ${n} días`;
+    return n === 1 ? "Caduco hace 1 dia" : `Caduco hace ${n} dias`;
   }
   if (days === 0) return "Caduca hoy";
-  if (days === 1) return "Caduca mañana";
-  return `${days} días`;
+  if (days === 1) return "Caduca manana";
+  return `${days} dias`;
 }
 
 export function isoDateOffset(daysFromToday: number): string {
@@ -31,4 +31,28 @@ export function isoDateOffset(daysFromToday: number): string {
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const dd = String(date.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
+}
+
+export function estimateExpiryDays(category: string): number {
+  const cat = (category || "").toLowerCase();
+  if (cat.includes("lacte")) return 7;
+  if (cat.includes("yogur")) return 10;
+  if (cat.includes("queso")) return 21;
+  if (cat.includes("carne")) return 3;
+  if (cat.includes("pollo")) return 2;
+  if (cat.includes("pescado")) return 2;
+  if (cat.includes("pan")) return 4;
+  if (cat.includes("fruta")) return 7;
+  if (cat.includes("verdura")) return 7;
+  if (cat.includes("huevo")) return 21;
+  if (cat.includes("conserva")) return 365;
+  if (cat.includes("pasta")) return 180;
+  if (cat.includes("arroz")) return 180;
+  if (cat.includes("cereal")) return 180;
+  if (cat.includes("legumbre")) return 365;
+  if (cat.includes("bebida")) return 30;
+  if (cat.includes("zumo")) return 7;
+  if (cat.includes("preparado")) return 3;
+  if (cat.includes("listo")) return 3;
+  return 7;
 }
