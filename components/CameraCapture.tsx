@@ -35,7 +35,7 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
           await videoRef.current.play();
           setReady(true);
         }
-      } catch (err) {
+      } catch {
         setError("No se pudo acceder a la camara. Revisa los permisos.");
       }
     };

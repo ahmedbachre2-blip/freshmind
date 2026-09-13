@@ -50,7 +50,7 @@ function HomeScreen() {
       } else {
         setReceiptItems(data.items || []);
       }
-    } catch (err) {
+    } catch {
       setReceiptError("Error de conexion");
     } finally {
       setReceiptLoading(false);
