@@ -13,6 +13,7 @@
     "@supabase/supabase-js": "^2.116.0",
     "@zxing/library": "^0.23.0",
     "next": "14.2.35",
+    "openai": "^7.15.0",
     "react": "^18",
     "react-dom": "^18",
     "zxing": "^0.1.2"
