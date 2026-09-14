@@ -55,16 +55,28 @@ export default function CameraCapture({ onCapture, onCancel }: CameraCaptureProp
     const video = videoRef.current;
     if (!video) return;
 
+    const MAX_SIZE = 1600;
+    let width = video.videoWidth;
+    let height = video.videoHeight;
+
+    if (width > height && width > MAX_SIZE) {
+      height = Math.round((height * MAX_SIZE) / width);
+      width = MAX_SIZE;
+    } else if (height > MAX_SIZE) {
+      width = Math.round((width * MAX_SIZE) / height);
+      height = MAX_SIZE;
+    }
+
     const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    canvas.width = width;
+    canvas.height = height;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    ctx.drawImage(video, 0, 0);
+    ctx.drawImage(video, 0, 0, width, height);
 
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
     const base64 = dataUrl.split(",")[1];
 
     if (streamRef.current) {
