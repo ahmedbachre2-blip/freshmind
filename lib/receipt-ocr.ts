@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  baseURL: "https://gateway.vlm.run/v1/openai",
-  apiKey: "vlmrun",
+  baseURL: "https://api.groq.com/openai/v1",
+  apiKey: process.env.GROQ_API_KEY || "",
 });
 
 export interface ReceiptItem {
@@ -15,33 +15,46 @@ export interface ReceiptItem {
 export async function extractReceiptItems(
   imageBase64: string
 ): Promise<ReceiptItem[]> {
-  const prompt = "Analiza esta imagen de un ticket de supermercado. Extrae TODOS los productos con esta informacion en formato JSON: name (nombre del producto en espanol), quantity (cantidad si esta visible), unitPrice (precio por unidad si esta visible), totalPrice (precio total si esta visible). Devuelve SOLO un array JSON valido, sin texto adicional.";
+  if (!process.env.GROQ_API_KEY) {
+    console.error("GROQ_API_KEY not set");
+    return [];
+  }
 
-  const response = await client.chat.completions.create({
-    model: "zai-org/glm-ocr",
-    messages: [
-      {
-        role: "user",
-        content: [
-          { type: "text", text: prompt },
-          {
-            type: "image_url",
-            image_url: {
-              url: "data:image/jpeg;base64," + imageBase64,
-            },
-          },
-        ],
-      },
-    ],
-  });
-
-  const content = response.choices[0]?.message?.content || "[]";
-  const cleaned = content.replace(/```json/g, "").replace(/```/g, "").trim();
+  const prompt = "Analiza esta imagen de un ticket de supermercado. Extrae TODOS los productos. Devuelve SOLO un array JSON valido con esta estructura: [{\"name\":\"nombre del producto\",\"quantity\":1,\"totalPrice\":1.20}]. Sin texto adicional antes o despues, solo el array JSON.";
 
   try {
-    const parsed = JSON.parse(cleaned);
-    return Array.isArray(parsed) ? parsed : parsed.items || parsed.products || [];
-  } catch {
+    const response = await client.chat.completions.create({
+      model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: prompt },
+            {
+              type: "image_url",
+              image_url: {
+                url: "data:image/jpeg;base64," + imageBase64,
+              },
+            },
+          ],
+        },
+      ],
+      temperature: 0.1,
+      max_tokens: 2000,
+    });
+
+    const content = response.choices[0]?.message?.content || "";
+    console.error("Groq raw response:", content.substring(0, 500));
+
+    if (!content) return [];
+
+    const jsonMatch = content.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) return [];
+
+    const parsed = JSON.parse(jsonMatch[0]);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.error("Groq error:", error);
     return [];
   }
 }
