@@ -8,9 +8,7 @@ import { SummaryCards } from "@/components/SummaryCards";
 import { ProductsProvider, useProducts } from "@/context/ProductsContext";
 import { isoDateOffset, estimateExpiryDays } from "@/lib/expiration";
 
-const CameraCapture = dynamic(() => import("@/components/CameraCapture"), {
-  ssr: false,
-});
+import CameraCapture from "@/components/CameraCapture";
 
 const ScannerModal = dynamic(
   () => import("@/components/ScannerModal").then((mod) => mod.ScannerModal),
